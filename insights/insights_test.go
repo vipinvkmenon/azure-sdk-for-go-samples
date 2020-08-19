@@ -61,10 +61,10 @@ func TestGetMetricsForWebsite(t *testing.T) {
 		util.LogAndPanic(err)
 	}
 	util.PrintAndLog("created web site")
-
+        var myresource = "/subscriptions/<MY-SUB-ID>/resourceGroups/<MY-RG>/providers/Microsoft.Compute/virtualMachines/<MY-VM>"
 	// retrieve the list of metric definitions.  each resource type
 	// will have its own set of queryable metrics.
-	metrics, err := ListMetricDefinitions(*webSite.ID)
+	metrics, err := ListMetricDefinitions( myresource)
 	if err != nil {
 		util.LogAndPanic(err)
 	}
@@ -73,7 +73,7 @@ func TestGetMetricsForWebsite(t *testing.T) {
 	util.PrintAndLog(strings.Join(metrics, "\n"))
 
 	// here, CpuTime and Requests are the non-localized metric names
-	metricData, err := GetMetricsData(ctx, *webSite.ID, []string{"CpuTime", "Requests"})
+	metricData, err := GetMetricsData(ctx,  myresource, []string{"Percentage CPU"})
 	if err != nil {
 		util.LogAndPanic(err)
 	}
